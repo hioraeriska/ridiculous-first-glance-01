@@ -8,6 +8,8 @@ pays for it, and why the business holds together.
 import os
 from pathlib import Path
 
+MAX_CHARS = 200
+
 PITCH = (
     "We sell custom obituaries for dead startups, written by poets, "
     "because founders pay $499 to have their failed company eulogized "
@@ -25,8 +27,8 @@ def resolve_output_dir() -> Path:
 def validate_entry(text: str) -> str:
     """Return the pitch if it satisfies the bounty gate, else raise."""
     cleaned = text.strip()
-    if not 1 <= len(cleaned) <= 200:
-        raise ValueError(f"entry is {len(cleaned)} characters, must be 1-200")
+    if not 1 <= len(cleaned) <= MAX_CHARS:
+        raise ValueError(f"entry is {len(cleaned)} characters, must be 1-{MAX_CHARS}")
     if cleaned != text.strip() or "\n" in cleaned:
         raise ValueError("entry must be a single line with no extra whitespace")
     if cleaned.count(".") != 1 or not cleaned.endswith("."):
